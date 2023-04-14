@@ -18,9 +18,11 @@ inputs:
   APP_ID:
     description: |
       ID of a GitHub App installed on this repo with repo Administration permissions.
+    default: "1234"
   APP_PEM:
     description: |
       Private Key from the above GitHub App installation.
+    default: unset
   GITHUB_TOKEN:
     description: |
       A Github token. `secrets.GITHUB_TOKEN`` is fine for start and finish steps.
@@ -84,8 +86,8 @@ runs:
         ${{ 
           github.event_name == 'pull_request' && 
           github.event.action == 'closed' &&
-          inputs.APP_ID != '' &&
-          inputs.APP_PEM != ''
+          inputs.APP_ID != '1234' &&
+          inputs.APP_PEM != 'unset'
         }}
       uses: tibdex/github-app-token@v1.8.0
       id: token
