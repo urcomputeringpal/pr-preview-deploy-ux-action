@@ -10,9 +10,9 @@ inputs:
   env_url:
     description: Environment URL. Required during 'finish' step.
   head_ref:
-    description: "${{ '${{ github.head_ref }}' }}. Required during 'start' step."
+    description: "`github.head_ref`. Required during 'start' step."
   status:
-    description: "${{ '${{ job.status }}' }}. Required during 'finish' step."
+    description: "`job.status`. Required during 'finish' step."
   deployment_id:
     description: Required during 'finish' step.
   app_id:
