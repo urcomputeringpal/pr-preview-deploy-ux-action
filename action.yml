@@ -1,0 +1,105 @@
+name: PR Preview Deploys
+description: Easy PR Preview Deploy UX
+inputs:
+  step:
+    description: start, finish, or cleanup
+    required: true
+  env:
+    description: Environment
+    required: true
+  env_url:
+    description: Environment URL
+    required: true
+  head_ref:
+    description: "${{ github.head_ref }}"
+    required: true
+  status:
+    description: "${{ job.status }}"
+    required: true
+  GITHUB_TOKEN:
+    description: |
+      A Github token. ${{ secrets.GITHUB_TOKEN }} is fine for start and finish steps.
+      The cleanup step requires a token with Repository Administration permissions.
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Determine deployment log URL
+      if: ${{ inputs.step == 'start' || inputs.step == 'finish' }}
+      uses: actions/github-script@v6
+      id: job-url
+      with:
+        script: |
+            const { data } = await github.rest.actions.listJobsForWorkflowRunAttempt({
+              ...context.repo,
+              run_id: context.runId,
+              attempt_number: process.env.GITHUB_RUN_ATTEMPT,
+            });
+
+            return data.jobs[0].html_url
+        result-encoding: string
+
+    - name: Start deployment
+      if: ${{ inputs.step == 'start' }}
+      uses: bobheadxi/deployments@v1
+      id: deployment
+      with:
+        step: start
+        token: ${{ inputs.GITHUB_TOKEN }}
+        ref: ${{ inputs.head_ref }}
+        logs: ${{ steps.job-url.outputs.result }}
+        env: preview-${{ github.event.pull_request.number }}
+
+    - name: Finish deployment
+      if: ${{ inputs.step == 'finish' }}
+      uses: bobheadxi/deployments@v1
+      with:
+        step: finish
+        token: ${{ inputs.GITHUB_TOKEN }}
+        ref: ${{ github.head_ref }}
+        logs: ${{ steps.job-url.outputs.result }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        status: ${{ inputs.status }}
+        env: ${{ inputs.env }}
+
+        env_url: https://pr-preview-${{ github.event.pull_request.number }}.example.com
+
+    - name: Mark deployments as deactivated
+      if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
+      uses: bobheadxi/deployments@v1
+      with:
+        step: deactivate-env
+        token: ${{ inputs.GITHUB_TOKEN }}
+        env: preview-${{ github.event.pull_request.number }}
+        desc: PR was closed
+
+    - name: Get token
+      if: |
+        ${{ 
+          github.event_name == 'pull_request' && 
+          github.event.action == 'closed'
+          inputs.APP_ID != ''
+          inputs.APP_PEM != ''
+        }}
+      uses: tibdex/github-app-token@v1.8.0
+      id: token
+      with:
+        app_id: ${{ inputs.APP_ID }}
+        private_key: ${{ inputs.APP_PEM }}
+
+    - name: Delete environment
+      if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
+      uses: actions/github-script@v6
+      env:
+        ENVIRONMENT_TO_DELETE: preview-${{ github.event.pull_request.number }}
+      with:
+        github-token: "${{ steps.token.outputs.token }}"
+        result-encoding: string
+        script: |
+            const { data } = await github.rest.repos.deleteAnEnvironment({
+              ...context.repo,
+              environment_name: process.env.ENVIRONMENT_TO_DELETE
+            });
+            console.log(data);
+
