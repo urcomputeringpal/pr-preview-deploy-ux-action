@@ -1,7 +1,5 @@
 # preview-deploy-workflow-example
 
-> Open a PR to test
-
 ## Features
 
 - Each open PR contains a link to its active deployments.
