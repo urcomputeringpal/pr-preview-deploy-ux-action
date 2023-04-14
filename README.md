@@ -21,7 +21,7 @@ GitHub Actions allows users to configure an environment for a job, but it's not 
 
 ### Merged PR
 
-[Example](https://github.com/urcomputeringpal/pr-preview-deploy-ux-action/pull/20)
+<img width="868" alt="image" src="https://user-images.githubusercontent.com/47/232169024-072e4748-9ff8-4e47-a07a-058d7aa4bd39.png">
 
 ## Usage
 
