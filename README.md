@@ -1,13 +1,13 @@
 # pr-preview-deploy-ux-action
 
-An example of a GitHub Actions workflow that creates and updates transient Deployment objects using the GitHub API to provide a friendly user-experience for interacting with transient preview deployments.
+GitHub Actions allows users to configure an environment for a job, but it's not yet possible to configure that environment as `transient. This GitHub Action creates and updates transient Deployment objects using the GitHub API to provide a friendly user-experience for interacting with PR preview deployments that are destroyed when a PR is merged or closed.
 
 ## Features
 
-- Each open PR contains a link to its active deployments.
+- Each open PR contains a link to its active deployments in the timeline.
 - No additional notifications or emails are generated.
-- PRs and the [Deployments tab](https://github.com/urcomputeringpal/pr-preview-deploy-ux-action/deployments) contains the history of all deployments.
-- Sidebar and environment settings only shows active deployments.
+- PRs and the [Deployments tab](https://github.com/urcomputeringpal/pr-preview-deploy-ux-action/deployments) show the history of all deployments. Following PR close, deployment links are no longer available. Deployments are reflected as 'Destroyed' in the UI.
+- Environments are cleaned up on PR merge or close, hiding stale preview deployments from the Environment section in the Repository sidebar and the Settings tab.
 
 ## Requirements
 
