@@ -8,28 +8,27 @@ inputs:
     description: Environment
     required: true
   env_url:
-    description: Environment URL
-    required: true
+    description: Environment URL. Required during 'finish' step.
   head_ref:
-    description: "${{ '${{ github.head_ref }}' }}"
-    required: true
+    description: "${{ '${{ github.head_ref }}' }}. Required during 'start' step."
   status:
-    description: "${{ '${{ job.status }}' }}"
+    description: "${{ '${{ job.status }}' }}. Required during 'finish' step."
   deployment_id:
     description: Required during 'finish' step.
   app_id:
     description: |
       ID of a GitHub App installed on this repo with repo Administration permissions.
-    default: "1234"
+      Required during 'cleanup' step.
+    default: ""
   app_pem:
     description: |
       Private Key from the above GitHub App installation.
-    default: unset
+      Required during 'cleanup' step.
+    default: ""
   token:
     description: |
       A Github token. `secrets.GITHUB_TOKEN`` is fine for start and finish steps.
-      The cleanup step requires a token with Repository Administration permissions.
-    required: true
+    default: ""
 
 outputs:
   deployment_id:
@@ -39,6 +38,14 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Get token
+      if: ${{ inputs.token == '' && inputs.app_id != '' && inputs.app_pem != '' }}
+      uses: tibdex/github-app-token@v1.8.0
+      id: token
+      with:
+        app_id: ${{ inputs.app_id || 'unset' }}
+        private_key: ${{ inputs.app_pem || 'unset' }}
+
     - name: Determine deployment log URL
       if: ${{ inputs.step == 'start' || inputs.step == 'finish' }}
       uses: actions/github-script@v6
@@ -87,14 +94,6 @@ runs:
         token: ${{ inputs.token }}
         env: preview-${{ github.event.pull_request.number }}
         desc: PR was closed
-
-    - name: Get token
-      if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && inputs.app_id != '1234' && inputs.app_pem != 'unset' }}
-      uses: tibdex/github-app-token@v1.8.0
-      id: token
-      with:
-        app_id: ${{ inputs.app_id || 'unset' }}
-        private_key: ${{ inputs.app_pem || 'unset' }}
 
     - name: Delete environment
       if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
