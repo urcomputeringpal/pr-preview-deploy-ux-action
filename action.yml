@@ -40,7 +40,7 @@ runs:
   steps:
     - name: Get token
       if: ${{ inputs.token == '' && inputs.app_id != '' && inputs.app_pem != '' }}
-      uses: tibdex/github-app-token@v1.8.0
+      uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
       id: token
       with:
         app_id: ${{ inputs.app_id || 'unset' }}
@@ -48,7 +48,7 @@ runs:
 
     - name: Determine deployment log URL
       if: ${{ inputs.step == 'start' || inputs.step == 'finish' }}
-      uses: actions/github-script@v6
+      uses: actions/github-script@98814c53be79b1d30f795b907e553d8679345975 # v6
       id: job-url
       with:
         script: |
@@ -63,7 +63,7 @@ runs:
 
     - name: Start deployment
       if: ${{ inputs.step == 'start' }}
-      uses: bobheadxi/deployments@v1
+      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
       id: deployment
       with:
         step: start
@@ -74,7 +74,7 @@ runs:
 
     - name: Finish deployment
       if: ${{ inputs.step == 'finish' }}
-      uses: bobheadxi/deployments@v1
+      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
       with:
         step: finish
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
@@ -88,7 +88,7 @@ runs:
 
     - name: Mark deployments as deactivated
       if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
-      uses: bobheadxi/deployments@v1
+      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
       with:
         step: deactivate-env
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
@@ -97,7 +97,7 @@ runs:
 
     - name: Delete environment
       if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
-      uses: actions/github-script@v6
+      uses: actions/github-script@98814c53be79b1d30f795b907e553d8679345975 # v6
       env:
         ENVIRONMENT_TO_DELETE: preview-${{ github.event.pull_request.number }}
       with:
