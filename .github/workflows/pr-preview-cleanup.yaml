@@ -8,10 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo shutdown deployment
-      - uses: urcomputeringpal/preview-deploy-workflow-example@main
+      - name: Cleanup Preview deploy
+        uses: urcomputeringpal/preview-deploy-workflow-example@main
         with:
           step: cleanup
           env: preview-${{ github.event.pull_request.number }}
           app_id: ${{ secrets.RENOVATE_APP_ID }}
-          private_key: ${{ secrets.RENOVATE_APP_PEM }}            
+          app_pem: ${{ secrets.RENOVATE_APP_PEM }}            
 
