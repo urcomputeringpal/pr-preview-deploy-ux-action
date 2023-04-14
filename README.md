@@ -26,7 +26,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: urcomputeringpal/pr-preview-deploy-ux-action@main
+      - uses: urcomputeringpal/pr-preview-deploy-ux-action@v0
         name: Start preview deploy
         id: start
         with:
@@ -38,7 +38,7 @@ jobs:
           
       - run: echo perform your preview deploy logic here
 
-      - uses: urcomputeringpal/pr-preview-deploy-ux-action@main
+      - uses: urcomputeringpal/pr-preview-deploy-ux-action@v0
         name: Finish preview deploy
         if: always()
         with:
@@ -72,7 +72,7 @@ jobs:
       - run: echo perform your cleanup logic here
 
       - name: Cleanup Preview deploy
-        uses: urcomputeringpal/pr-preview-deploy-ux-action@main
+        uses: urcomputeringpal/pr-preview-deploy-ux-action@v0
         with:
           step: cleanup
           env: preview-${{ github.event.pull_request.number }}
