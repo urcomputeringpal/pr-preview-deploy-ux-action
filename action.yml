@@ -71,6 +71,7 @@ runs:
         ref: ${{ inputs.head_ref }}
         logs: ${{ steps.job-url.outputs.result }}
         env: preview-${{ github.event.pull_request.number }}
+        override: false
 
     - name: Finish deployment
       if: ${{ inputs.step == 'finish' }}
@@ -83,6 +84,8 @@ runs:
         deployment_id: ${{ inputs.deployment_id }}
         status: ${{ inputs.status }}
         env: ${{ inputs.env }}
+        override: false
+        auto_inactive: true
 
         env_url: https://pr-preview-${{ github.event.pull_request.number }}.example.com
 
