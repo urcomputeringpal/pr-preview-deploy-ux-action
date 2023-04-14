@@ -1,6 +1,6 @@
 # pr-preview-deploy-ux-action
 
-GitHub Actions allows users to configure an environment for a job, but it's not yet possible to configure that environment as `transient. This GitHub Action creates and updates transient Deployment objects using the GitHub API to provide a friendly user-experience for interacting with PR preview deployments that are destroyed when a PR is merged or closed.
+GitHub Actions allows users to configure an environment for a job, but it's not yet possible to configure that environment as `transient`. This GitHub Action creates and updates transient Deployment objects using the GitHub API to provide a friendly user-experience for interacting with PR preview deployments that are conventionally destroyed when a PR is merged or closed.
 
 ## Features
 
