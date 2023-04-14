@@ -8,8 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo shutdown deployment
-      - name: Cleanup Preview deploy
-        uses: urcomputeringpal/pr-preview-deploy-ux-action@main
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: ./
+        name: Cleanup Preview deploy
         with:
           step: cleanup
           env: preview-${{ github.event.pull_request.number }}
