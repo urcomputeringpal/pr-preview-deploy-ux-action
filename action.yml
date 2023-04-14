@@ -11,14 +11,19 @@ inputs:
     description: Environment URL
     required: true
   head_ref:
-    description: "${{ github.head_ref }}"
+    description: "${{ '${{ github.head_ref }}' }}"
     required: true
   status:
-    description: "${{ job.status }}"
-    required: true
+    description: "${{ ${{ job.status }} }}"
+  APP_ID:
+    description: |
+      ID of a GitHub App installed on this repo with repo Administration permissions.
+  APP_PEM:
+    description: |
+      Private Key from the above GitHub App installation.
   GITHUB_TOKEN:
     description: |
-      A Github token. ${{ secrets.GITHUB_TOKEN }} is fine for start and finish steps.
+      A Github token. ${{ '${{ secrets.GITHUB_TOKEN }}' }} is fine for start and finish steps.
       The cleanup step requires a token with Repository Administration permissions.
     required: true
 
@@ -78,7 +83,7 @@ runs:
       if: |
         ${{ 
           github.event_name == 'pull_request' && 
-          github.event.action == 'closed'
+          github.event.action == 'closed' &&
           inputs.APP_ID != ''
           inputs.APP_PEM != ''
         }}
