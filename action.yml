@@ -73,7 +73,7 @@ runs:
         token: ${{ inputs.GITHUB_TOKEN }}
         ref: ${{ github.head_ref }}
         logs: ${{ steps.job-url.outputs.result }}
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        deployment_id: ${{ inputs.deployment_id }}
         status: ${{ inputs.status }}
         env: ${{ inputs.env }}
 
