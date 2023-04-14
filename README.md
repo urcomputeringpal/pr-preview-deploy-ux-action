@@ -1,4 +1,4 @@
-# preview-deploy-workflow-example
+# pr-preview-deploy-ux-action
 
 ## Features
 
