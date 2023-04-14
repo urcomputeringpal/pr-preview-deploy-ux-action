@@ -17,3 +17,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           env: preview-${{ github.event.pull_request.number }}
           desc: PR was closed
+
+      - name: mark environment as deactivated
+        uses: bobheadxi/deployments@v1
+        with:
+          step: deactivate-env
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: preview-1
+          desc: PR was closed
