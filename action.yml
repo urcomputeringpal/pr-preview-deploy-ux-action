@@ -23,7 +23,7 @@ inputs:
       Private Key from the above GitHub App installation.
   GITHUB_TOKEN:
     description: |
-      A Github token. ${{ '${{ secrets.GITHUB_TOKEN }}' }} is fine for start and finish steps.
+      A Github token. `secrets.GITHUB_TOKEN`` is fine for start and finish steps.
       The cleanup step requires a token with Repository Administration permissions.
     required: true
 
