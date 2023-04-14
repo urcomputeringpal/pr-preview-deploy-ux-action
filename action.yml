@@ -20,7 +20,7 @@ inputs:
       ID of a GitHub App installed on this repo with repo Administration permissions.
       Required during 'cleanup' step.
     default: ""
-  app_pem:
+  private_key:
     description: |
       Private Key from the above GitHub App installation.
       Required during 'cleanup' step.
@@ -39,12 +39,12 @@ runs:
   using: "composite"
   steps:
     - name: Get token
-      if: ${{ inputs.token == '' && inputs.app_id != '' && inputs.app_pem != '' }}
+      if: ${{ inputs.token == '' && inputs.app_id != '' && inputs.private_key != '' }}
       uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
       id: token
       with:
         app_id: ${{ inputs.app_id || 'unset' }}
-        private_key: ${{ inputs.app_pem || 'unset' }}
+        private_key: ${{ inputs.private_key || 'unset' }}
 
     - name: Determine deployment log URL
       if: ${{ inputs.step == 'start' || inputs.step == 'finish' }}
