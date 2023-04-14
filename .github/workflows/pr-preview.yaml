@@ -6,7 +6,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: urcomputeringpal/pr-preview-deploy-ux-action@jnewland-patch-1
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: ./
         name: Start preview deploy
         id: start
         with:
@@ -18,7 +20,7 @@ jobs:
           
       - run: echo perform deploy
 
-      - uses: urcomputeringpal/pr-preview-deploy-ux-action@jnewland-patch-1
+      - uses: ./
         name: Finish preview deploy
         if: always()
         with:
