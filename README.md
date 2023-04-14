@@ -12,3 +12,7 @@
 ## Requirements
 
 - GitHub App with repo Administration permissions
+
+## Examples
+
+- See [.github/workflows](./.github/workflows)
