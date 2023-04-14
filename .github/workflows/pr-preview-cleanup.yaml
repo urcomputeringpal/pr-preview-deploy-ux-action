@@ -29,6 +29,7 @@ jobs:
         env:
           ENVIRONMENT_TO_DELETE: preview-${{ github.event.pull_request.number }}
         with:
+          github-token: "${{ steps.token.outputs.token }}"
           result-encoding: string
           script: |
               const { data } = await github.rest.repos.deleteAnEnvironment({
