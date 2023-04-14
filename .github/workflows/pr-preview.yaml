@@ -6,7 +6,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: urcomputeringpal/preview-deploy-workflow-example@main
+      - uses: urcomputeringpal/pr-preview-deploy-ux-action@main
         name: Start preview deploy
         id: start
         with:
@@ -18,7 +18,7 @@ jobs:
           
       - run: echo perform deploy
 
-      - uses: urcomputeringpal/preview-deploy-workflow-example@main
+      - uses: urcomputeringpal/pr-preview-deploy-ux-action@main
         name: Finish preview deploy
         if: always()
         with:
