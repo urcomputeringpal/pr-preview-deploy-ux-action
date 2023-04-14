@@ -1,0 +1,26 @@
+name: PR Preview Cleanup
+on:
+  pull_request:
+    types: [ closed ]
+  
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - name: extract branch name
+        id: get_branch
+        shell: bash
+        env:
+          PR_HEAD: ${{ github.head_ref }}
+        run: echo "##[set-output name=branch;]$(echo ${PR_HEAD#refs/heads/} | tr / -)"
+
+      - run: echo shutdown deployment
+
+      # TODO https://github.com/bobheadxi/deployments/issues#step-delete-env
+      - name: mark environment as deactivated
+        uses: bobheadxi/deployments@v1
+        with:
+          step: deactivate-env
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ steps.get_branch.outputs.branch }}
+          desc: PR was closed
