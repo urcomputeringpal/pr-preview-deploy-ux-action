@@ -9,7 +9,6 @@ jobs:
     steps:
       - run: echo shutdown deployment
 
-      # TODO https://github.com/bobheadxi/deployments/issues#step-delete-env
       - name: mark environment as deactivated
         uses: bobheadxi/deployments@v1
         with:
@@ -18,10 +17,17 @@ jobs:
           env: preview-${{ github.event.pull_request.number }}
           desc: PR was closed
 
-      - name: mark environment as deactivated
+      - name: Get token
+        uses: tibdex/github-app-token@v1.8.0
+        id: token
+        with:
+          app_id: ${{ secrets.RENOVATE_APP_ID }}
+          private_key: ${{ secrets.RENOVATE_APP_PEM }}
+
+      - name: delete environment
         uses: bobheadxi/deployments@v1
         with:
-          step: deactivate-env
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: preview-1
+          step: delete-env
+          token: ${{ steps.token.outputs.token }}
+          env: preview-${{ github.event.pull_request.number }}
           desc: PR was closed
