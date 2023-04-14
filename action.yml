@@ -48,7 +48,7 @@ runs:
 
     - name: Determine deployment log URL
       if: ${{ inputs.step == 'start' || inputs.step == 'finish' }}
-      uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
+      uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
       id: job-url
       with:
         script: |
@@ -63,7 +63,7 @@ runs:
 
     - name: Start deployment
       if: ${{ inputs.step == 'start' }}
-      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
+      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
       id: deployment
       with:
         step: start
@@ -74,7 +74,7 @@ runs:
 
     - name: Finish deployment
       if: ${{ inputs.step == 'finish' }}
-      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
+      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
       with:
         step: finish
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
@@ -88,7 +88,7 @@ runs:
 
     - name: Mark deployments as deactivated
       if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
-      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
+      uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
       with:
         step: deactivate-env
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
@@ -97,7 +97,7 @@ runs:
 
     - name: Delete environment
       if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
-      uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
+      uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
       env:
         ENVIRONMENT_TO_DELETE: preview-${{ github.event.pull_request.number }}
       with:
