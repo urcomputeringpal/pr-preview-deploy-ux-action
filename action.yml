@@ -15,6 +15,8 @@ inputs:
     required: true
   status:
     description: "${{ '${{ job.status }}' }}"
+  deployment_id:
+    description: Required during 'finish' step.
   APP_ID:
     description: |
       ID of a GitHub App installed on this repo with repo Administration permissions.
@@ -28,6 +30,11 @@ inputs:
       A Github token. `secrets.GITHUB_TOKEN`` is fine for start and finish steps.
       The cleanup step requires a token with Repository Administration permissions.
     required: true
+
+outputs:
+  deployment_id:
+    description: "ID of deployment created during start step."
+    value: ${{ steps.deployment.outputs.deployment_id }}
 
 runs:
   using: "composite"
