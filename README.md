@@ -13,7 +13,23 @@ An example of a GitHub Actions workflow that creates and updates transient Deplo
 
 - GitHub App with repo Administration permissions
 
-## Examples
+## Example
+
+### Active PR
+
+#### Initial deployment
+
+<img width="855" alt="image" src="https://user-images.githubusercontent.com/47/232165989-94d3b897-c03d-4057-a352-e667e11a1b93.png">
+
+#### Subsequent synchronize events
+
+<img width="866" alt="image" src="https://user-images.githubusercontent.com/47/232166116-9e861121-c3b6-437e-92fc-134e8b649bc4.png">
+
+### Merged PR
+
+[Example](https://github.com/urcomputeringpal/pr-preview-deploy-ux-action/pull/20)
+
+## Usage
 
 ### Create Preview Deploy when PRs are created or updated
 
@@ -80,4 +96,4 @@ jobs:
           private_key: ${{ secrets.APP_PEM }}            
 ```
 
-- See [.github/workflows](./.github/workflows)
+See [.github/workflows](./.github/workflows) for more examples.
