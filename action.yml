@@ -82,13 +82,7 @@ runs:
         desc: PR was closed
 
     - name: Get token
-      if: |
-        ${{ 
-          github.event_name == 'pull_request' && 
-          github.event.action == 'closed' &&
-          inputs.APP_ID != '1234' &&
-          inputs.APP_PEM != 'unset'
-        }}
+      if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && inputs.APP_ID != '1234' && inputs.APP_PEM != 'unset' }}
       uses: tibdex/github-app-token@v1.8.0
       id: token
       with:
