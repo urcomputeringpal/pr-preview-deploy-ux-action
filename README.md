@@ -15,7 +15,15 @@ An example of a GitHub Actions workflow that creates and updates transient Deplo
 
 ## Example
 
-- TODO
+### Active PR
+
+#### Initial deployment
+
+<img width="855" alt="image" src="https://user-images.githubusercontent.com/47/232165989-94d3b897-c03d-4057-a352-e667e11a1b93.png">
+
+### Merged PR
+
+[Example](https://github.com/urcomputeringpal/pr-preview-deploy-ux-action/pull/20)
 
 ## Usage
 
