@@ -6,41 +6,25 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
-        id: job-url
-        with:
-          script: |
-              const { data } = await github.rest.actions.listJobsForWorkflowRunAttempt({
-                ...context.repo,
-                run_id: context.runId,
-                attempt_number: process.env.GITHUB_RUN_ATTEMPT,
-              });
-
-              return data.jobs[0].html_url
-          result-encoding: string
-
-      - name: start deployment
-        uses: bobheadxi/deployments@v1
-        id: deployment
+      - uses: urcomputeringpal/preview-deploy-workflow-example@main
+        id: start
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.head_ref }}
-          logs: ${{ steps.job-url.outputs.result }}
+          head_ref: ${{ github.head_ref }}
           env: preview-${{ github.event.pull_request.number }}
+          env_url: https://pr-preview-${{ github.event.pull_request.number }}.example.com
           
       - run: echo perform deploy
 
-      - name: update deployment status
-        uses: bobheadxi/deployments@v1
+      - uses: urcomputeringpal/preview-deploy-workflow-example@main
         if: always()
         with:
           step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.head_ref }}
-          logs: ${{ steps.job-url.outputs.result }}
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           status: ${{ job.status }}
-          env: ${{ steps.deployment.outputs.env }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          head_ref: ${{ github.head_ref }}
+          env: preview-${{ github.event.pull_request.number }}
 
+          deployment_id: ${{ steps.start.outputs.deployment_id }}
           env_url: https://pr-preview-${{ github.event.pull_request.number }}.example.com
