@@ -90,8 +90,8 @@ runs:
       uses: tibdex/github-app-token@v1.8.0
       id: token
       with:
-        app_id: ${{ inputs.APP_ID }}
-        private_key: ${{ inputs.APP_PEM }}
+        app_id: ${{ inputs.APP_ID || 'unset' }}
+        private_key: ${{ inputs.APP_PEM || 'unset' }}
 
     - name: Delete environment
       if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
