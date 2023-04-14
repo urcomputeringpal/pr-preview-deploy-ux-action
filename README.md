@@ -13,7 +13,11 @@ An example of a GitHub Actions workflow that creates and updates transient Deplo
 
 - GitHub App with repo Administration permissions
 
-## Examples
+## Example
+
+- TODO
+
+## Usage
 
 ### Create Preview Deploy when PRs are created or updated
 
@@ -80,4 +84,4 @@ jobs:
           private_key: ${{ secrets.APP_PEM }}            
 ```
 
-- See [.github/workflows](./.github/workflows)
+See [.github/workflows](./.github/workflows) for more examples.
