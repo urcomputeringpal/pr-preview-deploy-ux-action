@@ -26,7 +26,6 @@ jobs:
 
       - name: delete environment
         uses: actions/github-script@v6
-        id: job-url
         env:
           ENVIRONMENT_TO_DELETE: preview-${{ github.event.pull_request.number }}
         with:
@@ -34,7 +33,7 @@ jobs:
           script: |
               const { data } = await github.rest.repos.deleteAnEnvironment({
                 ...context.repo,
-                process.env.ENVIRONMENT_TO_DELETE,
+                environment_name: process.env.ENVIRONMENT_TO_DELETE
               });
               console.log(data);
 
