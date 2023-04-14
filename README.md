@@ -2,6 +2,10 @@
 
 > Open a PR to test
 
+## Bugs
+
+- Environments are not deleted.
+
 ## Features
 
 - Each open PR contains a link to its active deployments.
