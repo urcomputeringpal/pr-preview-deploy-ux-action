@@ -17,13 +17,7 @@ An example of a GitHub Actions workflow that creates and updates transient Deplo
 
 ### Active PR
 
-#### Initial deployment
-
-<img width="855" alt="image" src="https://user-images.githubusercontent.com/47/232165989-94d3b897-c03d-4057-a352-e667e11a1b93.png">
-
-#### Subsequent synchronize events
-
-<img width="866" alt="image" src="https://user-images.githubusercontent.com/47/232166116-9e861121-c3b6-437e-92fc-134e8b649bc4.png">
+<img width="858" alt="image" src="https://user-images.githubusercontent.com/47/232167347-5a30a8a7-5e15-47e7-9862-8f1ab5bdb01f.png">
 
 ### Merged PR
 
