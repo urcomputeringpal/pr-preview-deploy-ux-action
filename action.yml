@@ -14,7 +14,7 @@ inputs:
     description: "${{ '${{ github.head_ref }}' }}"
     required: true
   status:
-    description: "${{ ${{ job.status }} }}"
+    description: "${{ '${{ job.status }}' }}"
   APP_ID:
     description: |
       ID of a GitHub App installed on this repo with repo Administration permissions.
@@ -84,7 +84,7 @@ runs:
         ${{ 
           github.event_name == 'pull_request' && 
           github.event.action == 'closed' &&
-          inputs.APP_ID != ''
+          inputs.APP_ID != '' &&
           inputs.APP_PEM != ''
         }}
       uses: tibdex/github-app-token@v1.8.0
