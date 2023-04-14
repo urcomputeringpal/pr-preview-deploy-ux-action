@@ -14,5 +14,5 @@ jobs:
           step: cleanup
           env: preview-${{ github.event.pull_request.number }}
           app_id: ${{ secrets.RENOVATE_APP_ID }}
-          app_pem: ${{ secrets.RENOVATE_APP_PEM }}            
+          private_key: ${{ secrets.RENOVATE_APP_PEM }}            
 
