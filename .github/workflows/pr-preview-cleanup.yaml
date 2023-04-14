@@ -25,9 +25,16 @@ jobs:
           private_key: ${{ secrets.RENOVATE_APP_PEM }}
 
       - name: delete environment
-        uses: bobheadxi/deployments@v1
+        uses: actions/github-script@v6
+        id: job-url
+        env:
+          ENVIRONMENT_TO_DELETE: preview-${{ github.event.pull_request.number }}
         with:
-          step: delete-env
-          token: ${{ steps.token.outputs.token }}
-          env: preview-${{ github.event.pull_request.number }}
-          desc: PR was closed
+          result-encoding: string
+          script: |
+              const { data } = await github.rest.repos.deleteAnEnvironment({
+                ...context.repo,
+                process.env.ENVIRONMENT_TO_DELETE,
+              });
+              console.log(data);
+
