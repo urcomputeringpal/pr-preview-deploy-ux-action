@@ -7,13 +7,6 @@ jobs:
   prune:
     runs-on: ubuntu-latest
     steps:
-      - name: extract branch name
-        id: get_branch
-        shell: bash
-        env:
-          PR_HEAD: ${{ github.head_ref }}
-        run: echo "##[set-output name=branch;]$(echo ${PR_HEAD#refs/heads/} | tr / -)"
-
       - run: echo shutdown deployment
 
       # TODO https://github.com/bobheadxi/deployments/issues#step-delete-env
@@ -22,5 +15,5 @@ jobs:
         with:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ steps.get_branch.outputs.branch }}
+          env: preview-${{ github.event.pull_request.number }}
           desc: PR was closed
