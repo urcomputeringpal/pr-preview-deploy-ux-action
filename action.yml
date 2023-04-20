@@ -68,7 +68,7 @@ runs:
       with:
         step: start
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
-        head_ref: ${{ inputs.head_ref }}
+        ref: ${{ inputs.head_ref }}
         logs: ${{ steps.job-url.outputs.result }}
         env: ${{ inputs.env }}
         override: false
@@ -79,7 +79,7 @@ runs:
       with:
         step: finish
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
-        head_ref: ${{ inputs.head_ref }}
+        ref: ${{ inputs.head_ref }}
         logs: ${{ steps.job-url.outputs.result }}
         deployment_id: ${{ inputs.deployment_id }}
         status: ${{ inputs.status }}
