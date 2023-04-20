@@ -70,7 +70,7 @@ runs:
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
         ref: ${{ inputs.head_ref }}
         logs: ${{ steps.job-url.outputs.result }}
-        env: preview-${{ github.event.pull_request.number }}
+        env: ${{ inputs.env }}
         override: false
 
     - name: Finish deployment
@@ -87,22 +87,22 @@ runs:
         override: false
         auto_inactive: true
 
-        env_url: https://pr-preview-${{ github.event.pull_request.number }}.example.com
+        env_url: ${{ inputs.env_url }}
 
     - name: Mark deployments as deactivated
-      if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
+      if: ${{ inputs.step == 'cleanup' }}
       uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
       with:
         step: deactivate-env
         token: ${{ steps.token.outputs.token != '' && steps.token.outputs.token || inputs.token }}
-        env: preview-${{ github.event.pull_request.number }}
+        env: ${{ inputs.env }}
         desc: PR was closed
 
     - name: Delete environment
-      if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
+      if: ${{ inputs.step == 'cleanup' }}
       uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
       env:
-        ENVIRONMENT_TO_DELETE: preview-${{ github.event.pull_request.number }}
+        ENVIRONMENT_TO_DELETE: ${{ inputs.env }}
       with:
         github-token: "${{ steps.token.outputs.token }}"
         result-encoding: string
