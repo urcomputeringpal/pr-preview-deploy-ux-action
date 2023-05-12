@@ -58,7 +58,7 @@ runs:
               attempt_number: process.env.GITHUB_RUN_ATTEMPT,
             });
 
-            return data.jobs[0].html_url
+            return data.jobs.pop().html_url
         result-encoding: string
 
     - name: Start deployment
