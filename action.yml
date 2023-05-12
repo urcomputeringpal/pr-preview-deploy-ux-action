@@ -64,7 +64,17 @@ runs:
               attempt_number: process.env.GITHUB_RUN_ATTEMPT,
             });
 
-            return jobs.find(job => job.name.toLowerCase() == process.env.JOB_NAME.toLowerCase())?.html_url;
+            const matching = jobs.find(job => job.name.toLowerCase() == process.env.JOB_NAME.toLowerCase())?.html_url;
+            if (matching !== undefined) {
+              return matching;
+            }
+
+            // if we didn't find the right job, pop the last two portions 
+            // of the url off to get the summary of the workflow
+            const last = jobs.pop().html_url.split("/");
+            last.pop();
+            last.pop();
+            return last.join("/");
             
         result-encoding: string
 
