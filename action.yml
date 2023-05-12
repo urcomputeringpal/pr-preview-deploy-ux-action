@@ -31,8 +31,9 @@ inputs:
     default: ""
   log_url_job_name:
     description: |
-      Name of the step to use for the Deployment's log URL. Case-insensitive. Defaults to `deploy`
-    default: deploy
+      Name of the step to use for the Deployment's log URL. Case-insensitive.
+      Defaults to using the workflow summary url.
+    default: ''
 
 outputs:
   deployment_id:
