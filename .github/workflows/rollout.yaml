@@ -23,6 +23,7 @@ jobs:
           head_ref: ${{ github.head_ref }}
           env: rollout-${{ github.event.pull_request.number }}
           env_url: https://rollout-${{ github.event.pull_request.number }}.example.com
+          log_url_job_name: rollout
           
       - run: echo perform deploy
 
@@ -38,4 +39,5 @@ jobs:
 
           deployment_id: ${{ steps.start.outputs.deployment_id }}
           env_url: https://rollout-${{ github.event.pull_request.number }}.example.com
+          log_url_job_name: rollout
         
