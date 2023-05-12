@@ -3,7 +3,13 @@ on:
   pull_request:
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'true'
+
   deploy:
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
