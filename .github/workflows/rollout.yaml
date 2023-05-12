@@ -1,4 +1,4 @@
-name: PR Preview
+name: Rollout
 on:
   pull_request:
 
@@ -8,7 +8,7 @@ jobs:
     steps:
       - run: 'true'
 
-  deploy:
+  rollout:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
@@ -21,8 +21,9 @@ jobs:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           head_ref: ${{ github.head_ref }}
-          env: preview-${{ github.event.pull_request.number }}
-          env_url: https://pr-preview-${{ github.event.pull_request.number }}.example.com
+          env: rollout-${{ github.event.pull_request.number }}
+          env_url: https://rollout-${{ github.event.pull_request.number }}.example.com
+          log_url_job_name: rollout
           
       - run: echo perform deploy
 
@@ -34,8 +35,9 @@ jobs:
           status: ${{ job.status }}
           token: ${{ secrets.GITHUB_TOKEN }}
           head_ref: ${{ github.head_ref }}
-          env: preview-${{ github.event.pull_request.number }}
+          env: rollout-${{ github.event.pull_request.number }}
 
           deployment_id: ${{ steps.start.outputs.deployment_id }}
-          env_url: https://pr-preview-${{ github.event.pull_request.number }}.example.com
+          env_url: https://rollout-${{ github.event.pull_request.number }}.example.com
+          log_url_job_name: rollout
         

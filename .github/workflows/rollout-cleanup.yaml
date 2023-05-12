@@ -1,0 +1,20 @@
+name: Rollout cleanup
+on:
+  pull_request:
+    types: [ closed ]
+  
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo shutdown deployment
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: ./
+        name: Cleanup Preview deploy
+        with:
+          step: cleanup
+          env: rollout-${{ github.event.pull_request.number }}
+          app_id: ${{ secrets.RENOVATE_APP_ID }}
+          private_key: ${{ secrets.RENOVATE_APP_PEM }}            
+
